@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>রক্ত সংস্থা</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+        }
+        header {
+            background-color: #dc3545;
+            color: white;
+            padding: 15px;
+            font-size: 24px;
+        }
+        section {
+            background: white;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+        }
+        button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #c82333;
+        }
+        input, select {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #f8d7da;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .delete-btn {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .delete-btn:hover {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>রক্ত সংস্থা</h1>
+    </header>
+    
+    <section>
+        <h2>রক্তের অনুরোধ করুন</h2>
+        <form id="blood-request-form">
+            <select id="blood-group">
+                <option value="">রক্তের গ্রুপ নির্বাচন করুন</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+            <button type="submit">অনুরোধ করুন</button>
+            <p id="request-message"></p>
+        </form>
+        <button id="emergency-request">জরুরি রক্তের অনুরোধ</button>
+    </section>
+    
+    <section>
+        <h2>রক্তদাতা নিবন্ধন</h2>
+        <form id="donor-register-form">
+            <input type="text" id="donor-name" placeholder="আপনার নাম" required>
+            <input type="text" id="donor-phone" placeholder="ফোন নম্বর" required>
+            <select id="donor-blood-group">
+                <option value="">রক্তের গ্রুপ নির্বাচন করুন</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+            <input type="text" id="donor-location" placeholder="অবস্থান" required>
+            <button type="submit">নিবন্ধন করুন</button>
+        </form>
+    </section>
+    
+    <section>
+        <h2>রক্তদাতাদের তালিকা</h2>
+        <input type="text" id="search-donor" placeholder="রক্তদাতা খুঁজুন...">
+        <ul id="donor-list"></ul>
+    </section>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const donorList = document.getElementById("donor-list");
+            const registerForm = document.getElementById("donor-register-form");
+            
+            registerForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+                const name = document.getElementById("donor-name").value;
+                const phone = document.getElementById("donor-phone").value;
+                const group = document.getElementById("donor-blood-group").value;
+                const location = document.getElementById("donor-location").value;
+                
+                if (name && phone && group && location) {
+                    const donorItem = document.createElement("li");
+                    donorItem.innerHTML = `${name} - ${group} - ${phone} - ${location} <button class="delete-btn">X</button>`;
+                    donorList.appendChild(donorItem);
+                    registerForm.reset();
+                    
+                    donorItem.querySelector(".delete-btn").addEventListener("click", function () {
+                        donorItem.remove();
+                    });
+                } else {
+                    alert("সব তথ্য সঠিকভাবে পূরণ করুন!");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
